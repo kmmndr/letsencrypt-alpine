@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  certs-le:
+    image: letsencrypt-alpine:latest
+    ports:
+      - 80:80
+    environment:
+      - CA_FILE=/etc/ssl/certs/ca.pem
+      - CERT_FILE=/etc/ssl/certs/public.crt
+      - KEY_FILE=/etc/ssl/certs/public.key
+      - LETSENCRYPT_SERVER=${LETSENCRYPT_SERVER:-}
+      - LETSENCRYPT_DOMAIN=${LETSENCRYPT_DOMAIN:-localhost}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL:-root@localhost}
+    volumes:
+      - certs:/etc/ssl/certs
+      - lego:/var/lib/lego
+
+volumes:
+  certs:
+  lego:
